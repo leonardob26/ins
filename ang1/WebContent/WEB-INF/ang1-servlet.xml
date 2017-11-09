@@ -8,6 +8,7 @@
  <mvc:annotation-driven/>
 <context:component-scan base-package="com.ins.model" />
 <context:component-scan base-package="com.ins.controller" />
+<context:component-scan base-package="com.ins.repositories" />
 
 <bean class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration" id="swagger2Config"/>  
 <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"></mvc:resources>
