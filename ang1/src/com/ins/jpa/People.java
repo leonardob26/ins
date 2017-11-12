@@ -22,7 +22,7 @@ public class People implements Serializable {
 	private String pname;
 
 	//bi-directional many-to-many association to Vehicle
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="people_vehicle"
 		, joinColumns={
