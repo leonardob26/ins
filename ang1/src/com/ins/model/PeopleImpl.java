@@ -17,23 +17,16 @@ public class PeopleImpl implements IPeople {
 	@Autowired
 	VehicleRepository repoVehicle;
 	
+	
 	@Override
-	public String getPeoplesList() {
-		StringBuilder sb = new StringBuilder();
-		for (People people : repo.findAll()){
-			sb.append("<div class='row'><div class='col-md-3'><a href=selPeople.do?id=" + people.getId() + ">" + people.getPname() + "</a></div>");
-			sb.append("<div class='col-md-9'>");
-			for (Vehicle vehicle : people.getVehicles()) {
-				sb.append("<div class='row'>" + vehicle.getVname() + "</div>");
-			}
-			sb.append("</div></div>");
-		}
-		return sb.length()>0?sb.toString():"";
+	public List<People> getPeoplesList() {
+		List<People> people =  (List<People>) repo.findAll();
+		return people;
 	}
 	
 	@Override
-	public com.ins.model.People getPeopleVehicle(int idPeople) {
-		com.ins.model.People people = new com.ins.model.People();
+	public com.ins.model.PeopleM getPeopleVehicle(int idPeople) {
+		com.ins.model.PeopleM people = new com.ins.model.PeopleM();
 		People peopleJpa = repo.findOne(idPeople);
 		people.setId(idPeople);
 		people.setName(peopleJpa.getPname());
@@ -51,22 +44,15 @@ public class PeopleImpl implements IPeople {
 		return people;
 	}
 	@Override
-	public com.ins.model.People getPeople(int id) {
-		com.ins.model.People people = new com.ins.model.People();
+	public com.ins.jpa.People getPeople(int id) {
+		com.ins.jpa.People people = new com.ins.jpa.People();
 		if (id==0){
-			people.setName("");
+			people.setPname("");
 			return people;
 		}
-		StringBuilder sb = new StringBuilder();
-		People peopleJpa = repo.findOne(id);
-		people.setId(id);
-		people.setName(peopleJpa.getPname());
-		for (Vehicle vehicle : peopleJpa.getVehicles()) {
-			sb.append("<tr><td>" + vehicle.getVname() + "</td>");
-			sb.append("<td><a href=delPeopleVehicles.do?idPeople=" + id + "&idVehicle=" + vehicle.getId() + "> Delete</a></td></tr>");
-		}
-		people.setVehiclesList(sb.toString());
-		return people;
+		
+		return repo.findOne(id);
+		
 	}
 	
 	@Override

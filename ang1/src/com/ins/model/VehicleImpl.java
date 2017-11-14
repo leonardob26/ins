@@ -1,8 +1,12 @@
 package com.ins.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
 import com.ins.jpa.Vehicle;
 import com.ins.repositories.VehicleRepository;
 
@@ -12,22 +16,26 @@ public class VehicleImpl implements IVehicle {
 	VehicleRepository repo;
 	
 	@Override
-	public String getVehiclesList() {	
-		StringBuilder sb = new StringBuilder();
+	public List<VehicleM> getVehiclesList() {	
+		List<VehicleM>  lsv = new ArrayList();
+		
 		for (Vehicle vehicle : repo.findAll()){
-			sb.append("<div class='row'><div class='col-md-5'><a href=selVehicles.do?id=" +  
-					vehicle.getId() + ">" + vehicle.getVname() + "</a></div></div>");
+			VehicleM ve = new VehicleM();
+			ve.setId(vehicle.getId());
+			ve.setName(vehicle.getVname());
+			lsv.add(ve);
 		}
-		return sb.length()>0?sb.toString():"";
+
+		return lsv;
 	}
 
 	@Override
-	public com.ins.model.Vehicle getVehicle(int id) {
-		com.ins.model.Vehicle vehicle = new com.ins.model.Vehicle();
+	public VehicleM getVehicle(int id) {
+		VehicleM vehicle = new VehicleM();
 		if (id!=0){
-			Vehicle vehicleJpa = repo.findOne(id);
-			vehicle.setId(id);
-			vehicle.setName(vehicleJpa.getVname());
+			Vehicle ve = repo.findOne(id);
+			vehicle.setId(ve.getId());
+			vehicle.setName(ve.getVname());
 		}
 		return vehicle;
 	}

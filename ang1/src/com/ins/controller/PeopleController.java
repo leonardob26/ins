@@ -1,38 +1,44 @@
 package com.ins.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ins.model.People;
+import com.ins.model.PeopleM;
 import com.ins.model.PeopleImpl;
 import com.ins.model.logger.Errors;
 
-@Controller
+@RestController
+@RequestMapping("/people")
 public class PeopleController {
 	@Autowired
 	private PeopleImpl people;
 
-	@RequestMapping(path = "/peopleList.do", method = RequestMethod.GET)
-	public ModelAndView getPeopleList() {
-		return new ModelAndView("peopleList", "peopleList", people.getPeoplesList());
+	@RequestMapping(path = "/peopleList", method = RequestMethod.GET)
+	public List<com.ins.jpa.People> getPeopleList(HttpServletRequest request) {
+		/*HttpSession session = request.getSession();
+		if (session.getAttribute("rol")==null || !UserImpl.isAuthorized((Integer) session.getAttribute("rol"), "Products")) 
+			return null;*/
+		return people.getPeoplesList();
 	}
 
-	@RequestMapping(path = "/selPeople", method = RequestMethod.GET)
-	public ModelAndView selPeople(Map<String, Object> model, @RequestParam("id") int id) {
-		People pe = people.getPeople(id);
-		model.put("vehiclesList", pe.getVehiclesList());
-		return new ModelAndView("people", "people", pe);
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public com.ins.jpa.People selPeople(HttpServletRequest request, @PathVariable int id) {
+		return people.getPeople(id);
 	}
 
 	@RequestMapping(path = "/delPeopleVehicles", method = RequestMethod.GET)
@@ -46,7 +52,7 @@ public class PeopleController {
 	}
 
 	@RequestMapping(value = "/people", method = RequestMethod.POST)
-	public ModelAndView submit(@Valid @ModelAttribute("employee") People people, BindingResult result,
+	public ModelAndView submit(@Valid @ModelAttribute("employee") PeopleM people, BindingResult result,
 			HttpServletRequest request, Map<String, Object> model) {
 		if (result.hasErrors()) {
 			return new ModelAndView("error");
@@ -79,7 +85,7 @@ public class PeopleController {
 	}
 
 	@RequestMapping(value = "/addPeopleVehicles", method = RequestMethod.POST)
-	public ModelAndView submitAddPersonVehicles(@Valid @ModelAttribute("employee") People people,
+	public ModelAndView submitAddPersonVehicles(@Valid @ModelAttribute("employee") PeopleM people,
 			BindingResult result, HttpServletRequest request, Map<String, Object> model) {
 		if (result.hasErrors()) {
 			return new ModelAndView("error");

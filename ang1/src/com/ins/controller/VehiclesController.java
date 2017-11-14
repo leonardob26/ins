@@ -1,5 +1,7 @@
 package com.ins.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -7,61 +9,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ins.model.Vehicle;
+import com.ins.model.VehicleM;
 import com.ins.model.VehicleImpl;
 import com.ins.model.logger.Errors;
-@Controller
+
+@RestController
+@RequestMapping("/vehicle")
 public class VehiclesController {
 	@Autowired
 	private VehicleImpl vehicle;
 	
-	@RequestMapping(path = "/vehiclesList.do", method = RequestMethod.GET)
-	public ModelAndView getVehiclesList(){
-		try {			
-			return new ModelAndView("vehiclesList", "vehiclesList", vehicle.getVehiclesList());
-		} catch (Exception e) {
-			return new ModelAndView("error", "error", Errors.getError(e));
-		} 
+	@RequestMapping(path = "/", method = RequestMethod.GET)
+	public List<VehicleM> getVehiclesList(HttpServletRequest request){
+		return vehicle.getVehiclesList();
 	}
-	@RequestMapping(path = "/selVehicles.do", method = RequestMethod.GET)
-	public ModelAndView selVehicles( @RequestParam("id") int id){
-		try {
-			Vehicle veh = vehicle.getVehicle(id);
-			return new ModelAndView("vehicles", "vehicles", veh);
-		} catch (Exception e) {
-			return new ModelAndView("error", "error", Errors.getError(e));
-		} 
-	}
-	@RequestMapping(value = "/vehicles.do", method = RequestMethod.POST)
-    public String submit(@Valid @ModelAttribute("vehicle")Vehicle veh, BindingResult result, HttpServletRequest request) {
-        if (result.hasErrors()) {
-            return "error";
-        }
-        try {
-			String action = request.getParameter("submit");
-			switch (action) {
-			case "Update":
-				if (veh.getId() == 0)
-					vehicle.insert(veh.getName());
-				else
-					vehicle.update(veh.getId(), veh.getName());
-				break;
-			case "Delete":
-				vehicle.delete(veh.getId());
-				break;
-			default:
-				break;
-			}
-        } catch (Exception e) {
-			return "error";
-		} 
-		return "redirect:/vehiclesList.do";
+	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
+	public VehicleM selVehicles(HttpServletRequest request, @PathVariable int id){
+		return vehicle.getVehicle(id);	
 	}
 	
-
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public String delete(HttpServletRequest request, @PathVariable int id) {
+		/*HttpSession session = request.getSession();
+		if (session.getAttribute("rol")==null || !UserImpl.isAuthorizedWrite((Integer) session.getAttribute("rol"), "Products")) 
+			return "ACCESS DENIED";*/
+		return String.valueOf(vehicle.delete(id));
+	}
+	@RequestMapping(value = "/{name}", method = RequestMethod.POST)
+	public String insert(HttpServletRequest request, @PathVariable String name) {
+		/*HttpSession session = request.getSession();
+		if (session.getAttribute("rol")==null || !UserImpl.isAuthorizedWrite((Integer) session.getAttribute("rol"), "Products")) 
+			return "ACCESS DENIED";*/
+		return String.valueOf(vehicle.insert(name));
+	}
+	@RequestMapping(value = "/{id}/{name}", method = RequestMethod.PUT)
+	public String update(HttpServletRequest request, @PathVariable int id, @PathVariable String name) {
+		/*HttpSession session = request.getSession();
+		if (session.getAttribute("rol")==null || !UserImpl.isAuthorizedWrite((Integer) session.getAttribute("rol"), "Products")) 
+			return "ACCESS DENIED";*/
+		vehicle.update(id,name);
+		return "SUCCESS";
+	}
 }

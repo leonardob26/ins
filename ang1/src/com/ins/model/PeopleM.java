@@ -3,7 +3,7 @@ package com.ins.model;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class People {
+public class PeopleM {
 	private int id;
 	private String name;
 	private Map<Integer, String> cmbVehicles = new LinkedHashMap<Integer, String>();

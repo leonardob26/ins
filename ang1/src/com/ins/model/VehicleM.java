@@ -1,6 +1,6 @@
 package com.ins.model;
 
-public class Vehicle {
+public class VehicleM {
 	private int id=0;
 	private String name="";
 	public int getId() {
