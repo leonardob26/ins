@@ -16,11 +16,11 @@ public class VehicleImpl implements IVehicle {
 	VehicleRepository repo;
 	
 	@Override
-	public List<VehicleM> getVehiclesList() {	
-		List<VehicleM>  lsv = new ArrayList();
+	public List<StructVehicle> getVehiclesList() {	
+		List<StructVehicle>  lsv = new ArrayList();
 		
 		for (Vehicle vehicle : repo.findAll()){
-			VehicleM ve = new VehicleM();
+			StructVehicle ve = new StructVehicle();
 			ve.setId(vehicle.getId());
 			ve.setName(vehicle.getVname());
 			lsv.add(ve);
@@ -30,8 +30,8 @@ public class VehicleImpl implements IVehicle {
 	}
 
 	@Override
-	public VehicleM getVehicle(int id) {
-		VehicleM vehicle = new VehicleM();
+	public StructVehicle getVehicle(int id) {
+		StructVehicle vehicle = new StructVehicle();
 		if (id!=0){
 			Vehicle ve = repo.findOne(id);
 			vehicle.setId(ve.getId());

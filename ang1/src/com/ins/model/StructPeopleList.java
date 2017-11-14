@@ -1,8 +1,8 @@
 package com.ins.model;
 
-public class VehicleM {
-	private int id=0;
-	private String name="";
+public class StructPeopleList {
+	private int id;
+	private String name;
 	public int getId() {
 		return id;
 	}

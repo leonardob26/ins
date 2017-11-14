@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ins.model.VehicleM;
+import com.ins.model.StructVehicle;
 import com.ins.model.VehicleImpl;
 import com.ins.model.logger.Errors;
 
@@ -27,11 +27,11 @@ public class VehiclesController {
 	private VehicleImpl vehicle;
 	
 	@RequestMapping(path = "/", method = RequestMethod.GET)
-	public List<VehicleM> getVehiclesList(HttpServletRequest request){
+	public List<StructVehicle> getVehiclesList(HttpServletRequest request){
 		return vehicle.getVehiclesList();
 	}
 	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
-	public VehicleM selVehicles(HttpServletRequest request, @PathVariable int id){
+	public StructVehicle selVehicles(HttpServletRequest request, @PathVariable int id){
 		return vehicle.getVehicle(id);	
 	}
 	

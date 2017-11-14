@@ -2,8 +2,9 @@ package com.ins.model;
 
 import java.util.List;
 
+
 public interface IPeople {
-	public List<com.ins.jpa.People> getPeoplesList();
+	public List<PeopleM> getPeoplesList();
 	public int insert(String pname);
 	public int delete(int id);
 	public int update(int id, String pname);
