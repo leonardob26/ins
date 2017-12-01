@@ -5,36 +5,45 @@
 <title>Vehicles</title>
 <script src="libraries/jquery.min.js"></script>
 <script src="libraries/angular.min.js"></script>
+<script src="libraries/angular-route.min.js"></script>
 <link rel="stylesheet" href="libraries/bootstrap.min.css">
 <link rel="stylesheet" href="libraries/bootstrap-theme.min.css">
 <script src="libraries/bootstrap.min.js"></script>
 
 <script>
-	var vehicleApp = angular.module('vehicleApp', []);
-	vehicleApp.controller('vehicleCtrl', function($scope, $http) {
+	var vehicleApp = angular.module('vehicleApp',  ['ngRoute']);
+	vehicleApp.config(function($routeProvider) {
+        $routeProvider.
+          when('/', {
+            template: '<ul><li ng-repeat="country in countries">{{country.name}}</li><ul>', //'<tr><th>Vehicle</th></tr><tr ng-repeat="vehicle in vehicles"><td><a href="">{{vehicle.name}}</a></td></tr>' , 
+            controller: 'VehicleListCtrl'
+          }).
+          when('/:vehicleName', {
+            template: '<h1>TODO create vehicle detail view</h1>',
+            controller: 'VehicleDetailCtrl'
+          }).
+          otherwise({
+            redirectTo: '/'
+          });
+      });
+	
+	
+	vehicleApp.controller('VehicleListCtrl', function($scope, $http) {
 		$http.get('http://localhost:8080/ang1/vehicle/').then(
 				function(response) {
 					$scope.vehicles = response.data;
 				});
- 		$scope.edit = function(id) {
-			 $http.get('http://localhost:8080/ang1/vehicle/' + id).then(
-					function(response) {
-						var veh = response.data;
-						console.log(veh);
-					}); 
-		}; 
 	});
+	vehicleApp.controller('VehicleDetailCtrl', function ($scope, $routeParams){
+        console.log($routeParams);
+      });
 </script>
 </head>
-<body ng-controller="vehicleCtrl">
-	<h1>Vehicles</h1>
-	<table class="table table-bordered">
-		<tr>
-			<th>Vehicle</th>
-		</tr>
-		<tr ng-repeat="vehicle in vehicles">
-			<td><a href="" ng-click="edit(vehicle.id)">{{vehicle.name}}</a></td>
-		</tr>
+<body>
+<div ng-view></div>
+	<!-- <h1>Vehicles</h1>
+	<table class="table table-bordered" ng-view>
+
 	</table>
 	<div>
 		<form action="summit">
@@ -42,6 +51,6 @@
 				<span>Nombre:</span><span><input ng-model="name" value= /></span>
 			</div>
 		</form>
-	</div>
+	</div> -->
 </body>
 </html>
