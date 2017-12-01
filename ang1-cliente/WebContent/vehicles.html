@@ -20,6 +20,7 @@
 			 $http.get('http://localhost:8080/ang1/vehicle/' + id).then(
 					function(response) {
 						var veh = response.data;
+						console.log(veh);
 					}); 
 		}; 
 	});
