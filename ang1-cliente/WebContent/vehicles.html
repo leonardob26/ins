@@ -3,52 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <title>Vehicles</title>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
-<script
-	src="libraries/angular-route.min.js"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
+<script src="libraries/jquery.min.js"></script>
+<script src="libraries/angular.min.js"></script>
+<link rel="stylesheet" href="libraries/bootstrap.min.css">
+<link rel="stylesheet" href="libraries/bootstrap-theme.min.css">
+<script src="libraries/bootstrap.min.js"></script>
 
 <script>
-	var vehicleApp = angular.module('vehicleApp', ['ngRoute']);
+	var vehicleApp = angular.module('vehicleApp', []);
 	vehicleApp.controller('vehicleCtrl', function($scope, $http) {
 		$http.get('http://localhost:8080/ang1/vehicle/').then(
 				function(response) {
 					$scope.vehicles = response.data;
 				});
-		vehicleApp.config(function($routeProvider) {
-	         $routeProvider.
-	           when('/', {
-	             template: '<ul><li ng-repeat="country in countries">{{country.name}}</li><ul>',
-	             controller: 'CountryListCtrl'
-	           }).
-	           when('/:countryName', {
-	             template: '<h1>TODO create country detail view</h1>',
-	             controller: 'CountryDetailCtrl'
-	           }).
-	           otherwise({
-	             redirectTo: '/'
-	           });
-	       });
-		$scope.edit = function(id) {
-			$http.get('http://localhost:8080/ang1/vehicle/' + id).then(
+ 		$scope.edit = function(id) {
+			 $http.get('http://localhost:8080/ang1/vehicle/' + id).then(
 					function(response) {
 						var veh = response.data;
-					});
-		};
+					}); 
+		}; 
 	});
 </script>
 </head>
