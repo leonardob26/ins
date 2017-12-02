@@ -1,0 +1,17 @@
+<h1>Vehicles</h1>
+<table class="table table-bordered">
+	<tr>
+		<th>Vehicle</th>
+	</tr>
+	<tr ng-repeat="vehicle in vehicles">
+		<td><a href="">{{vehicle.name}}</a></td>
+	</tr>
+</table>
+
+<div>
+	<form action="summit">
+		<div>
+			<span>Nombre:</span><span><input ng-model="name" value= /></span>
+		</div>
+	</form>
+</div>
