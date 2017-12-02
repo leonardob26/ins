@@ -4,14 +4,8 @@
 		<th>Vehicle</th>
 	</tr>
 	<tr ng-repeat="vehicle in vehicles">
-		<td><a href="">{{vehicle.name}}</a></td>
+		<td><a href="#!/{{vehicle.id}}">{{vehicle.name}}</a></td>
 	</tr>
 </table>
 
-<div>
-	<form action="summit">
-		<div>
-			<span>Nombre:</span><span><input ng-model="name" value= /></span>
-		</div>
-	</form>
-</div>
+

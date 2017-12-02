@@ -1,1 +1,10 @@
-<h1>TODO create vehicle detail view: {{id}}</h1>
+<h1>Vehicle</h1>
+<div ng-controller="VehicleDetailCtrl">
+	<form  ng-submit="addVehicle()">
+		<div>
+			<input type="hidden" ng-model="vehicles.id" />
+			<span>Nombre:</span><span><input ng-model="vehicles.name" type="text"/></span>
+		</div>
+		<button type="button"></button>
+	</form>
+</div>

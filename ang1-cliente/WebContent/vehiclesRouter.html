@@ -38,10 +38,19 @@
 					$scope.vehicles = response.data;
 				});
 	});
-	vehicleApp.controller('VehicleDetailCtrl', function ($scope, $routeParams){
-		$scope.id = $routeParams.vehicleId;
-        console.log($routeParams.vehicleId);
+	vehicleApp.controller('VehicleDetailCtrl', function ($scope, $http, $routeParams){
+		$http.get('http://localhost:8080/ang1/vehicle/' + $routeParams.vehicleId).then(
+				function(response) {
+					$scope.vehicles = response.data;
+				});
+		$scope.addVehicle = function() {
+			$http.post('http://localhost:8080/ang1/vehicle/' + $routeParams.vehicleId).then(
+					function(response) {
+						$scope.vehicles = response.data;
+					});  
+	    };
       });
+	
 </script>
 </head>
 <body ng-view>
