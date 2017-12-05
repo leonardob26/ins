@@ -44,10 +44,16 @@
 					$scope.vehicles = response.data;
 				});
 		$scope.addVehicle = function() {
-			$http.post('http://localhost:8080/ang1/vehicle/' + $routeParams.vehicleId).then(
+			if ($scope.vehicles.id==0){
+				$http.post('http://localhost:8080/ang1/vehicle/' + $scope.vehicles.name).then(
 					function(response) {
 						$scope.vehicles = response.data;
-					});  
+					});
+			} else
+				$http.put('http://localhost:8080/ang1/vehicle/'+ $scope.vehicles.id + "/" + $scope.vehicles.name).then(
+						function(response) {
+							$scope.vehicles = response.data;
+						});
 	    };
       });
 	
