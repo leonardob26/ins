@@ -55,7 +55,7 @@ public class VehiclesController {
 		/*HttpSession session = request.getSession();
 		if (session.getAttribute("rol")==null || !UserImpl.isAuthorizedWrite((Integer) session.getAttribute("rol"), "Products")) 
 			return "ACCESS DENIED";*/
-		vehicle.update(id,name);
-		return "SUCCESS";
+		
+		return String.valueOf(vehicle.update(id,name));
 	}
 }

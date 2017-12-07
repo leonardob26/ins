@@ -14,12 +14,12 @@ import com.ins.repositories.VehicleRepository;
 public class VehicleImpl implements IVehicle {
 	@Autowired
 	VehicleRepository repo;
-	
+
 	@Override
-	public List<StructVehicle> getVehiclesList() {	
-		List<StructVehicle>  lsv = new ArrayList();
-		
-		for (Vehicle vehicle : repo.findAll()){
+	public List<StructVehicle> getVehiclesList() {
+		List<StructVehicle> lsv = new ArrayList();
+
+		for (Vehicle vehicle : repo.findAll()) {
 			StructVehicle ve = new StructVehicle();
 			ve.setId(vehicle.getId());
 			ve.setName(vehicle.getVname());
@@ -32,7 +32,7 @@ public class VehicleImpl implements IVehicle {
 	@Override
 	public StructVehicle getVehicle(int id) {
 		StructVehicle vehicle = new StructVehicle();
-		if (id!=0){
+		if (id != 0) {
 			Vehicle ve = repo.findOne(id);
 			vehicle.setId(ve.getId());
 			vehicle.setName(ve.getVname());
@@ -55,16 +55,20 @@ public class VehicleImpl implements IVehicle {
 	}
 
 	@Override
-	public void update(int id, String name) {
-		try {
-			Vehicle veh;
-			if (repo.exists(1)){
-				veh = repo.findOne(id);
+	public int update(int id, String name) {
+		Vehicle veh;
+		if (repo.exists(1)) {
+			veh = repo.findOne(id);
+			try {
+
 				veh.setVname(name);
 				repo.save(veh);
+
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			return veh.getId();
 		}
+		return 0;
 	}
 }

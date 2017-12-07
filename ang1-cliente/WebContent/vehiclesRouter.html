@@ -38,22 +38,26 @@
 					$scope.vehicles = response.data;
 				});
 	});
-	vehicleApp.controller('VehicleDetailCtrl', function ($scope, $http, $routeParams){
+	vehicleApp.controller('VehicleDetailCtrl', function ($scope, $http, $routeParams, $location){
+		$scope.labelButton = $routeParams.vehicleId==0 ? "Add" : "Upd";
 		$http.get('http://localhost:8080/ang1/vehicle/' + $routeParams.vehicleId).then(
 				function(response) {
 					$scope.vehicles = response.data;
 				});
-		$scope.addVehicle = function() {
+		$scope.updVehicle = function() {
 			if ($scope.vehicles.id==0){
 				$http.post('http://localhost:8080/ang1/vehicle/' + $scope.vehicles.name).then(
 					function(response) {
 						$scope.vehicles = response.data;
 					});
-			} else
+			} else {
 				$http.put('http://localhost:8080/ang1/vehicle/'+ $scope.vehicles.id + "/" + $scope.vehicles.name).then(
 						function(response) {
-							$scope.vehicles = response.data;
+							console.log(response);
+							//$scope.vehicles = response.data;
 						});
+			}
+			$location.path('/');
 	    };
       });
 	

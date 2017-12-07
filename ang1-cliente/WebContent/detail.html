@@ -1,10 +1,10 @@
 <h1>Vehicle</h1>
 <div ng-controller="VehicleDetailCtrl">
-	<form  ng-submit="addVehicle()">
+	<form  ng-submit="updVehicle()">
 		<div>
 			<input type="hidden" ng-model="vehicles.id" />
 			<span>Nombre1:</span><span><input ng-model="vehicles.name" type="text"/></span>
 		</div>
-		<input type="submit" value="Add" >
+		<input type="submit" value="{{labelButton}}" >
 	</form>
 </div>

@@ -12,5 +12,5 @@ public interface IVehicle {
 	public StructVehicle getVehicle(int id);
 	public int delete(int id);
 	public int insert(String name);
-	public void update(int id, String name);
+	public int update(int id, String name);
 }
